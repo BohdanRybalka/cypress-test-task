@@ -139,4 +139,21 @@ describe('Registration tests', () => {
 
     resultsPage.elements.hobbyNames(`${HOBBIES.reading},${HOBBIES.music},${HOBBIES.sports}`);
   });
+
+  it('Should be possible to register without choosing hobby', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    registrationPage.chooseTime(TIME.morning);
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
+
+    resultsPage.elements.greetingsTitle().should('contain.text', testUser.username);
+    resultsPage.elements.genderName(GENDERS.male).should('be.visible');
+    resultsPage.elements.timeName(TIME.morning).should('be.visible');
+  });
 });
