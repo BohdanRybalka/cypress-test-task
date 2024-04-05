@@ -82,7 +82,7 @@ describe('Registration tests', () => {
     resultsPage.elements.genderName(GENDERS.female).should('be.visible');
   });
 
-  it('Should be possible to register with one hobby ', () => {
+  it('Should be possible to register with one hobby', () => {
     registrationPage.fillUsernameInput(testUser.username);
     registrationPage.fillPasswordInput(testUser.password);
 
@@ -95,5 +95,21 @@ describe('Registration tests', () => {
     registrationPage.clickOnSubmitBtn();
 
     resultsPage.elements.hobbyNames(HOBBIES.reading);
+  });
+
+  it('Should be possible to register with two hobbies ', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    registrationPage.chooseHobby(HOBBIES.reading);
+    registrationPage.chooseHobby(HOBBIES.music);
+
+    registrationPage.chooseTime(TIME.evening);
+
+    registrationPage.clickOnSubmitBtn();
+
+    resultsPage.elements.hobbyNames(`${HOBBIES.reading},${HOBBIES.music}`);
   });
 });
