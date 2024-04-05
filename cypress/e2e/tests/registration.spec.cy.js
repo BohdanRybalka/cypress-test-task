@@ -237,8 +237,6 @@ describe('Registration negative tests', () => {
 
     registrationPage.chooseGender(GENDERS.male);
 
-    cy.intercept('POST', '/submit').as('postRequest');
-
     registrationPage.clickOnSubmitBtn();
 
     cy.url().should('equal', Cypress.config().baseUrl + '/');
@@ -253,8 +251,6 @@ describe('Registration negative tests', () => {
     registrationPage.fillUsernameInput(testUser.username);
 
     registrationPage.chooseGender(GENDERS.male);
-
-    cy.intercept('POST', '/submit').as('postRequest');
 
     registrationPage.clickOnSubmitBtn();
 
@@ -271,8 +267,31 @@ describe('Registration negative tests', () => {
 
     registrationPage.chooseGender(GENDERS.male);
 
-    cy.intercept('POST', '/submit').as('postRequest');
+    registrationPage.clickOnSubmitBtn();
 
+    cy.url().should('equal', Cypress.config().baseUrl + '/');
+
+    registrationPage.elements.usernameLabel().should('be.visible');
+    registrationPage.elements.usernameInput().should('be.visible');
+    registrationPage.elements.passwordLabel().should('be.visible');
+    registrationPage.elements.passwordInput().should('be.visible');
+  });
+
+  it('Should not be possible to register without choosing gender', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url().should('equal', Cypress.config().baseUrl + '/');
+
+    registrationPage.elements.usernameLabel().should('be.visible');
+    registrationPage.elements.usernameInput().should('be.visible');
+    registrationPage.elements.passwordLabel().should('be.visible');
+    registrationPage.elements.passwordInput().should('be.visible');
+  });
+
+  it('Should not be possible to register without choosing any value', () => {
     registrationPage.clickOnSubmitBtn();
 
     cy.url().should('equal', Cypress.config().baseUrl + '/');
