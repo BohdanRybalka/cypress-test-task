@@ -66,6 +66,8 @@ describe('Registration tests', () => {
 
     registrationPage.clickOnSubmitBtn();
 
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
+
     resultsPage.elements.genderName(GENDERS.male).should('be.visible');
   });
 
@@ -78,6 +80,8 @@ describe('Registration tests', () => {
     registrationPage.chooseTime(TIME.noon);
 
     registrationPage.clickOnSubmitBtn();
+
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
 
     resultsPage.elements.genderName(GENDERS.female).should('be.visible');
   });
@@ -94,10 +98,12 @@ describe('Registration tests', () => {
 
     registrationPage.clickOnSubmitBtn();
 
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
+
     resultsPage.elements.hobbyNames(HOBBIES.reading);
   });
 
-  it('Should be possible to register with two hobbies ', () => {
+  it('Should be possible to register with two hobbies', () => {
     registrationPage.fillUsernameInput(testUser.username);
     registrationPage.fillPasswordInput(testUser.password);
 
@@ -110,6 +116,27 @@ describe('Registration tests', () => {
 
     registrationPage.clickOnSubmitBtn();
 
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
+
     resultsPage.elements.hobbyNames(`${HOBBIES.reading},${HOBBIES.music}`);
+  });
+
+  it('Should be possible to register with three hobbies', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    registrationPage.chooseHobby(HOBBIES.reading);
+    registrationPage.chooseHobby(HOBBIES.music);
+    registrationPage.chooseHobby(HOBBIES.sports);
+
+    registrationPage.chooseTime(TIME.evening);
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
+
+    resultsPage.elements.hobbyNames(`${HOBBIES.reading},${HOBBIES.music},${HOBBIES.sports}`);
   });
 });
