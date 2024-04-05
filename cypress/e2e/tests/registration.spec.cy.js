@@ -138,7 +138,7 @@ describe('Registration positive tests', () => {
 
     cy.url({ timeout: 6000 }).should('include', resultsPage.url);
 
-    resultsPage.elements.hobbyNames(`${HOBBIES.reading},${HOBBIES.music},${HOBBIES.sports}`);
+    resultsPage.elements.hobbyNames(`${HOBBIES.reading},${HOBBIES.sports},${HOBBIES.music}`);
   });
 
   it('Should be possible to register without choosing hobby', () => {

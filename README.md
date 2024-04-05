@@ -10,6 +10,9 @@ NodeJS 18.12
 # To run tests  
 `npm run test`
 
+# To open Cypress app
+`npx cypress open`
+
 # Assignment  
 Congratulations! You just got hired to your first unicorn startup company.  
 Your new company just finished developing the latest feature called "Your average form".  
