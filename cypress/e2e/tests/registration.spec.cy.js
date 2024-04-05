@@ -248,4 +248,38 @@ describe('Registration negative tests', () => {
     registrationPage.elements.passwordLabel().should('be.visible');
     registrationPage.elements.passwordInput().should('be.visible');
   });
+
+  it('Should not be possible to register without choosing username field', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    cy.intercept('POST', '/submit').as('postRequest');
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url().should('equal', Cypress.config().baseUrl + '/');
+
+    registrationPage.elements.usernameLabel().should('be.visible');
+    registrationPage.elements.usernameInput().should('be.visible');
+    registrationPage.elements.passwordLabel().should('be.visible');
+    registrationPage.elements.passwordInput().should('be.visible');
+  });
+
+  it('Should not be possible to register without choosing password field', () => {
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    cy.intercept('POST', '/submit').as('postRequest');
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url().should('equal', Cypress.config().baseUrl + '/');
+
+    registrationPage.elements.usernameLabel().should('be.visible');
+    registrationPage.elements.usernameInput().should('be.visible');
+    registrationPage.elements.passwordLabel().should('be.visible');
+    registrationPage.elements.passwordInput().should('be.visible');
+  });
 });
