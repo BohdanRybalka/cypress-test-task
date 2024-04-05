@@ -209,11 +209,16 @@ describe('Registration tests', () => {
   });
 
   it('Should be possible to choose only one gender', () => {
-    registrationPage.fillUsernameInput(testUser.username);
-    registrationPage.fillPasswordInput(testUser.password);
-
     registrationPage.chooseGender(GENDERS.male);
     registrationPage.elements.maleRadioBtn().should('be.checked');
     registrationPage.elements.femaleRadioBtn().should('not.be.checked');
+  });
+
+  it('Should be possible to verify that only one hobby is selected when user clicks on the checkbox', () => {
+    registrationPage.chooseHobby(HOBBIES.reading);
+
+    registrationPage.elements.hobbyItemCheckbox(HOBBIES.reading).should('be.checked');
+    registrationPage.elements.hobbyItemCheckbox(HOBBIES.music).should('not.be.checked');
+    registrationPage.elements.hobbyItemCheckbox(HOBBIES.sports).should('not.be.checked');
   });
 });
