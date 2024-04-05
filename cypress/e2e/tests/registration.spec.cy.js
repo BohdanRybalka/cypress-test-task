@@ -1,5 +1,5 @@
 import {GENDERS, HOBBIES, registrationPage, TIME} from "../../pages/RegistrationPage";
-import {generateUserData} from "../../helpers/commands";
+import {generateUserData} from "../../support/helpers";
 import {resultsPage} from "../../pages/ResultsPage";
 
 let testUser;
