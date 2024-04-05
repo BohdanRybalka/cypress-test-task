@@ -1,10 +1,11 @@
 import {GENDERS, HOBBIES, registrationPage, TIME} from "../../pages/RegistrationPage";
 import {generateUserData} from "../../helpers/commands";
 import {resultsPage} from "../../pages/ResultsPage";
+import {basePage} from "../../pages/BasePage";
 
-describe('Registration tests', () => {
-  let testUser;
+let testUser;
 
+describe('Registration positive tests', () => {
   beforeEach(() => {
     testUser = generateUserData();
 
@@ -220,5 +221,31 @@ describe('Registration tests', () => {
     registrationPage.elements.hobbyItemCheckbox(HOBBIES.reading).should('be.checked');
     registrationPage.elements.hobbyItemCheckbox(HOBBIES.music).should('not.be.checked');
     registrationPage.elements.hobbyItemCheckbox(HOBBIES.sports).should('not.be.checked');
+  });
+});
+
+describe('Registration negative tests', () => {
+  beforeEach(() => {
+    testUser = generateUserData();
+
+    registrationPage.navigateToPage();
+  });
+
+  it('Should not be possible to register without choosing time dropdown', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    cy.intercept('POST', '/submit').as('postRequest');
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url().should('equal', Cypress.config().baseUrl + '/');
+
+    registrationPage.elements.usernameLabel().should('be.visible');
+    registrationPage.elements.usernameInput().should('be.visible');
+    registrationPage.elements.passwordLabel().should('be.visible');
+    registrationPage.elements.passwordInput().should('be.visible');
   });
 });
