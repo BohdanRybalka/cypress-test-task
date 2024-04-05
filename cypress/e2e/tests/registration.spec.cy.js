@@ -55,4 +55,30 @@ describe('Registration tests', () => {
     resultsPage.elements.genderName(GENDERS.male).should('be.visible');
     resultsPage.elements.timeName(TIME.morning).should('be.visible');
   });
+
+  it('Should be possible to register with "Male" gender', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    registrationPage.chooseTime(TIME.morning);
+
+    registrationPage.clickOnSubmitBtn();
+
+    resultsPage.elements.genderName(GENDERS.male).should('be.visible');
+  });
+
+  it('Should be possible to register with "Female" gender', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.female);
+
+    registrationPage.chooseTime(TIME.noon);
+
+    registrationPage.clickOnSubmitBtn();
+
+    resultsPage.elements.genderName(GENDERS.female).should('be.visible');
+  });
 });
