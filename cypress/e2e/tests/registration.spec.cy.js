@@ -207,4 +207,13 @@ describe('Registration tests', () => {
     resultsPage.elements.genderName(GENDERS.male).should('be.visible');
     resultsPage.elements.timeName(TIME.evening).should('be.visible');
   });
+
+  it('Should be possible to choose only one gender', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+    registrationPage.elements.maleRadioBtn().should('be.checked');
+    registrationPage.elements.femaleRadioBtn().should('not.be.checked');
+  });
 });
