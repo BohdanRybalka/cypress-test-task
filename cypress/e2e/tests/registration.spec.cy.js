@@ -1,7 +1,13 @@
-import {hobbies, registrationPage} from "../../pages/RegistrationPage";
+import {GENDERS, HOBBIES, registrationPage, TIME} from "../../pages/RegistrationPage";
+import {generateUserData} from "../../helpers/commands";
+import {resultsPage} from "../../pages/ResultsPage";
 
-describe('Registration e2e', () => {
+describe('Registration tests', () => {
+  let testUser;
+
   beforeEach(() => {
+    testUser = generateUserData();
+
     registrationPage.navigateToPage();
   });
 
@@ -20,16 +26,33 @@ describe('Registration e2e', () => {
     registrationPage.elements.femaleRadioBtn().should('be.visible');
 
     registrationPage.elements.hobbyLabel().should('be.visible');
-    registrationPage.elements.hobbyItemName(hobbies.reading).should('be.visible');
-    registrationPage.elements.hobbyItemName(hobbies.sports).should('be.visible');
-    registrationPage.elements.hobbyItemName(hobbies.music).should('be.visible');
-    registrationPage.elements.hobbyItemCheckbox(hobbies.reading).should('be.visible');
-    registrationPage.elements.hobbyItemCheckbox(hobbies.sports).should('be.visible');
-    registrationPage.elements.hobbyItemCheckbox(hobbies.music).should('be.visible');
+    registrationPage.elements.hobbyItemName(HOBBIES.reading).should('be.visible');
+    registrationPage.elements.hobbyItemName(HOBBIES.sports).should('be.visible');
+    registrationPage.elements.hobbyItemName(HOBBIES.music).should('be.visible');
+    registrationPage.elements.hobbyItemCheckbox(HOBBIES.reading).should('be.visible');
+    registrationPage.elements.hobbyItemCheckbox(HOBBIES.sports).should('be.visible');
+    registrationPage.elements.hobbyItemCheckbox(HOBBIES.music).should('be.visible');
 
     registrationPage.elements.timeLabel().should('be.visible');
     registrationPage.elements.timeDropdown().should('be.visible');
 
     registrationPage.elements.submitBtn().should('be.visible');
+  });
+
+  it('Should be possible to register', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    registrationPage.chooseTime(TIME.morning);
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
+
+    resultsPage.elements.greetingsTitle().should('contain.text', testUser.username);
+    resultsPage.elements.genderName(GENDERS.male).should('be.visible');
+    resultsPage.elements.timeName(TIME.morning).should('be.visible');
   });
 });
