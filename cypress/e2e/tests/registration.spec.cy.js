@@ -156,4 +156,55 @@ describe('Registration tests', () => {
     resultsPage.elements.genderName(GENDERS.male).should('be.visible');
     resultsPage.elements.timeName(TIME.morning).should('be.visible');
   });
+
+  it('Should be possible to register with "Morning" time value', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    registrationPage.chooseTime(TIME.morning);
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
+
+    resultsPage.elements.greetingsTitle().should('contain.text', testUser.username);
+    resultsPage.elements.genderName(GENDERS.male).should('be.visible');
+    resultsPage.elements.timeName(TIME.morning).should('be.visible');
+  });
+
+  it('Should be possible to register with "Noon" time value', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    registrationPage.chooseTime(TIME.noon);
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
+
+    resultsPage.elements.greetingsTitle().should('contain.text', testUser.username);
+    resultsPage.elements.genderName(GENDERS.male).should('be.visible');
+    resultsPage.elements.timeName(TIME.noon).should('be.visible');
+  });
+
+  it('Should be possible to register with "Evening" time value', () => {
+    registrationPage.fillUsernameInput(testUser.username);
+    registrationPage.fillPasswordInput(testUser.password);
+
+    registrationPage.chooseGender(GENDERS.male);
+
+    registrationPage.chooseTime(TIME.evening);
+
+    registrationPage.clickOnSubmitBtn();
+
+    cy.url({ timeout: 6000 }).should('include', resultsPage.url);
+
+    resultsPage.elements.greetingsTitle().should('contain.text', testUser.username);
+    resultsPage.elements.genderName(GENDERS.male).should('be.visible');
+    resultsPage.elements.timeName(TIME.evening).should('be.visible');
+  });
 });
